@@ -72,6 +72,20 @@ const getProducts = async (req: Request, res: Response) => {
   res.json(products);
 };
 
+const getProduct = async (req: Request, res: Response) => {
+  const product = {
+    id: 1,
+    name: "leg warmers",
+    image: "https://source.unsplash.com/random?product=1",
+    price: 49.9,
+    stock: 10,
+  };
+
+  res.status(httpStatusCodes.OK);
+  res.json(product);
+};
+
 export default {
   getProducts,
+  getProduct,
 };
