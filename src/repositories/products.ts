@@ -7,6 +7,7 @@ const findProductsRepo = () => {
       name: true,
       price: true,
       stock: true,
+      image: true,
       createdAt: true,
       updatedAt: true,
     },
@@ -22,13 +23,16 @@ const getProductByID = (id: number) => {
 }
 
 const createProduct = (product) => {
+  const defaultActiveStatus = true;
+
   return prisma.product.create({
     data: {
       id: product.id,
       name: product.name,
       price: product.price,
       stock: product.stock,
-      active: true,    
+      image: product.image,
+      active: defaultActiveStatus,    
     },
   });
 }
@@ -40,7 +44,8 @@ const updateProduct = (id: number, product) => {
       name: product.name,
       price: product.price,
       stock: product.stock,
-      active: product.active,      
+      active: product.active, 
+      image: product.image,     
     },
   });
 }

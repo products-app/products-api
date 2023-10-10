@@ -19,4 +19,5 @@ model Product {
   stock         Int      @default(0)
   active        Boolean  @default(true)
   description   String?
+  image         String?
 }
