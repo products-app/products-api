@@ -23,6 +23,20 @@ const findUserByEmail = (email: string) => {
   })
 }
 
+const findUserByID = (id: number) => {
+  return prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      name: true,
+      email: true,
+      password: true,
+      id: true,
+    },
+  })
+}
+
 const createUser = (user) => {
   const defaultActiveStatus = true;
 
@@ -52,6 +66,7 @@ const updateUser = (id: number, user) => {
 export {
   findUsers,
   findUserByEmail,
+  findUserByID,
   createUser,
   updateUser,
 };
