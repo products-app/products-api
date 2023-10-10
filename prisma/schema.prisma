@@ -12,15 +12,16 @@ datasource db {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  name        String   @db.VarChar(255)
-  price       Float
-  stock       Int      @default(0)
-  active      Boolean  @default(true)
-  description String?
-  image       String?
+  id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  name          String          @db.VarChar(255)
+  price         Float
+  stock         Int             @default(0)
+  active        Boolean         @default(true)
+  description   String?
+  image         String?
+  OrderProducts OrderProducts[]
 }
 
 model User {
@@ -54,6 +55,11 @@ model OrderProducts {
   updatedAt DateTime @updatedAt
   order     Order    @relation(fields: [orderId], references: [id])
   orderId   Int
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int
+  price     Float?
+  quantity  Int      @default(1)
 
   @@index([orderId])
+  @@index([productId])
 }
