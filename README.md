@@ -117,6 +117,11 @@ Then to update the database, run the command:
 prisma db push
 ```
 
+To reset your database and apply all migrations (all data will be lost)
+```
+prisma migrate reset
+```
+
 <!-- LICENSE -->
 ## License
 
