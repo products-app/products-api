@@ -2,10 +2,14 @@ import prisma from "../db/prisma";
 
 const findOrdersRepo = () => {
   return prisma.order.findMany({
-    include: {
-      user: true,
+    select: {
+      id: true,
+      status: true,
+      created_at: true,
+      updated_at: true,
+      user_id: true,
       order_products: true,
-    },
+    }
   });
 }
 
@@ -14,10 +18,14 @@ const getOrderByID = (id: number) => {
     where: {
       id,
     },
-    include: {
-      user: true,
+    select: {
+      id: true,
+      status: true,
+      created_at: true,
+      updated_at: true,
+      user_id: true,
       order_products: true,
-    },
+    }
   })
 }
 
