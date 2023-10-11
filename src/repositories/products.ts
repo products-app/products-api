@@ -8,8 +8,8 @@ const findProductsRepo = () => {
       price: true,
       stock: true,
       image: true,
-      createdAt: true,
-      updatedAt: true,
+      created_at: true,
+      updated_at: true,
     },
   });
 }

@@ -4,7 +4,7 @@ const findOrdersRepo = () => {
   return prisma.order.findMany({
     include: {
       user: true,
-      orderProducts: true,
+      order_products: true,
     },
   });
 }
@@ -16,7 +16,7 @@ const getOrderByID = (id: number) => {
     },
     include: {
       user: true,
-      orderProducts: true,
+      order_products: true,
     },
   })
 }
@@ -25,7 +25,7 @@ const createOrder = (order) => {
   const defaultStatus = "in_process";
 
   const orderProducts = order.items.map((item) => ({
-    productId: item.product_id,
+    product_id: item.product_id,
     price: item.price,
     quantity: item.quantity,
   }));
@@ -33,9 +33,9 @@ const createOrder = (order) => {
   return prisma.order.create({
     data: {
       id: order.id,
-      userId: order.user_id,
+      user_id: order.user_id,
       status: defaultStatus,    
-      orderProducts: {
+      order_products: {
         create: orderProducts,
       },
     },
@@ -45,7 +45,7 @@ const createOrder = (order) => {
 const updateOrder = (id: number, order) => {
   const orderProducts = order.items.map((item) => ({
     id: item.id,
-    productId: item.productId,
+    product_id: item.productId,
     price: item.price,
     quantity: item.quantity,
   }));
@@ -54,7 +54,7 @@ const updateOrder = (id: number, order) => {
     where: { id },
     data: {
       status: order.status,    
-      orderProducts: {
+      order_products: {
         update: orderProducts,
       },    
     },
@@ -64,10 +64,10 @@ const updateOrder = (id: number, order) => {
 const findOrdersByUserID = (userId: number) => {
   return prisma.order.findMany({
     where: {
-      userId,
+      user_id: userId,
     },
     include: {
-      orderProducts: true,
+      order_products: true,
     },
   });
 }
