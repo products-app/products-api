@@ -22,6 +22,8 @@ model Product {
   description   String?
   image         String?
   orderProducts OrderProducts[]
+
+  @@map("product")
 }
 
 model User {
@@ -35,6 +37,8 @@ model User {
   phone     String?  @db.VarChar(14)
   active    Boolean  @default(true)
   Order     Order[]
+
+  @@map("user")
 }
 
 model Order {
@@ -47,6 +51,7 @@ model Order {
   orderProducts OrderProducts[]
 
   @@index([userId])
+  @@map("order")
 }
 
 model OrderProducts {
@@ -62,4 +67,5 @@ model OrderProducts {
 
   @@index([orderId])
   @@index([productId])
+  @@map("order_product")
 }
