@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import {
   findUsers,
   findUserByEmail,
+  findUserByID,
   createUser,
   updateUser,
 } from "../repositories/user";
@@ -21,19 +22,25 @@ const getUsers = async (req: Request, res: Response) => {
 };
 
 const getUser = async (req: Request, res: Response) => {
-  const { email } = req.params;
+  const id = parseInt(req.params.id);
 
-  if (!email) {
+  if (!id) {
     res.status(httpStatusCodes.BAD_REQUEST);
     res.json({ error_msg: "id value is invalid" });
     return;
   }
 
   try {
-    const user = await findUserByEmail(email);
+    const user = await findUserByID(id);
+    if (!user) {
+      res.status(httpStatusCodes.NOT_FOUND);
+      res.json({ error_msg: "user not found" });
+      return
+    }
 
+    const { password, ...filteredUser } = Object.assign({}, user);
     res.status(httpStatusCodes.OK);
-    res.json(user || {});
+    res.json(filteredUser || {});
   } catch (e) {
     res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
     res.json({ error_msg: e });

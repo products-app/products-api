@@ -3,9 +3,13 @@ import prisma from "../db/prisma";
 const findUsers = () => {
   return prisma.user.findMany({
     select: {
-      email: true,
-      username: true,
       id: true,
+      username: true,
+      email: true,
+      phone: true,
+      active: true,
+      created_at: true,
+      updated_at: true,
     },
   });
 }
@@ -29,10 +33,15 @@ const findUserByID = (id: number) => {
       id,
     },
     select: {
+      id: true,
+      username: true,
       name: true,
       email: true,
       password: true,
-      id: true,
+      phone: true,
+      active: true,
+      created_at: true,
+      updated_at: true,
     },
   })
 }
