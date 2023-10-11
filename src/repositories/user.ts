@@ -20,6 +20,7 @@ const findUserByEmail = (email: string) => {
       email,
     },
     select: {
+      name: true,
       email: true,
       password: true,
       id: true,
