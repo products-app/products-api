@@ -1,6 +1,7 @@
 import httpStatusCodes from "http-status-codes";
 import { Request, Response } from "express";
 import { findOrdersRepo, getOrderByID, createOrder, updateOrder } from '../repositories/order'
+import { checkoutPaymentIntent } from './useCases/checkout'
 
 const getOrders = async (req: Request, res: Response) => {
   try {
@@ -50,10 +51,15 @@ const postOrder = async (req: Request, res: Response) => {
   }
 
   try {
-    await createOrder(order);
+    // TO DO: VALIDATE TOTAL AND PRODUCTS
+    const orderCreated = await createOrder(order);
+    const paymentIntent = await checkoutPaymentIntent(order);
 
     res.status(httpStatusCodes.CREATED);
-    res.json({});
+    res.json({
+      ...orderCreated,
+      client_secret: paymentIntent.client_secret,
+    });
   } catch (e) {
     res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
     res.json({ error_msg: e });

@@ -5,10 +5,11 @@ const findOrdersRepo = () => {
     select: {
       id: true,
       status: true,
+      user_id: true,
+      total: true,
+      order_products: true,
       created_at: true,
       updated_at: true,
-      user_id: true,
-      order_products: true,
     }
   });
 }
@@ -21,17 +22,16 @@ const getOrderByID = (id: number) => {
     select: {
       id: true,
       status: true,
+      user_id: true,
+      total: true,
+      order_products: true,
       created_at: true,
       updated_at: true,
-      user_id: true,
-      order_products: true,
     }
   })
 }
 
 const createOrder = (order) => {
-  const defaultStatus = "in_process";
-
   const orderProducts = order.items.map((item) => ({
     product_id: item.product_id,
     price: item.price,
@@ -42,7 +42,7 @@ const createOrder = (order) => {
     data: {
       id: order.id,
       user_id: order.user_id,
-      status: defaultStatus,    
+      total: order.total,
       order_products: {
         create: orderProducts,
       },
@@ -61,7 +61,8 @@ const updateOrder = (id: number, order) => {
   return prisma.order.update({
     where: { id },
     data: {
-      status: order.status,    
+      status: order.status,  
+      total: order.total,  
       order_products: {
         update: orderProducts,
       },    
