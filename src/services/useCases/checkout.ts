@@ -7,12 +7,13 @@ import { updateOrder } from "../../repositories/order"
 export const checkoutPaymentIntent = async (order) => {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: (order.total * 100).toFixed(0),
-    currency: 'BRL',
-    payment_method_types: ['card'],
+    currency: 'brl',
+    automatic_payment_methods: {enabled: true},
     metadata: {
       order_id: order.id,
     }
   });
+  console.log(paymentIntent)
   return paymentIntent
 };
 
