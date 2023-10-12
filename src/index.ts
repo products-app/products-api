@@ -5,11 +5,14 @@ import cors from 'cors';
 
 import config from './config';
 import routes from './routes';
+import webhooks from './routes/webhooks';
 
 const port = process.env.PORT || 3333;
 const app = express();
 
 app.use(cors());
+
+app.use(config.api.baseURLWebhook, express.raw({ type: 'application/json' }), webhooks);
 
 app.use(bodyParser.json());
 app.use(

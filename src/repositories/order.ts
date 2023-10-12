@@ -51,18 +51,21 @@ const createOrder = (order) => {
 }
 
 const updateOrder = (id: number, order) => {
-  const orderProducts = order.items.map((item) => ({
-    id: item.id,
-    product_id: item.productId,
-    price: item.price,
-    quantity: item.quantity,
-  }));
+  let orderProducts;
+  if (order?.items) {
+    orderProducts = order.items.map((item) => ({
+      id: item.id || undefined,
+      product_id: item.productId || undefined,
+      price: item.price || undefined,
+      quantity: item.quantity || undefined,
+    }));
+  }
 
   return prisma.order.update({
     where: { id },
     data: {
-      status: order.status,  
-      total: order.total,  
+      status: order.status || undefined,
+      total: order.total || undefined,
       order_products: {
         update: orderProducts,
       },    
