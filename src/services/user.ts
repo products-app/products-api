@@ -129,7 +129,7 @@ const userLogin = async (req: Request, res: Response) => {
     }
 
     res.status(httpStatusCodes.OK);
-    res.json({ name: userExists.name, user_logged: true });
+    res.json({ name: userExists.name, id: userExists.id, user_logged: true });
   } catch (e) {
     res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
     res.json({ user_logged: false, error_msg: e });
