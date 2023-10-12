@@ -79,7 +79,14 @@ const findOrdersByUserID = (userId: number) => {
       user_id: userId,
     },
     include: {
-      order_products: true,
+      order_products: {
+        include: {
+          product: true,
+        }
+      },
+    },
+    orderBy: {
+      id: 'desc',
     },
   });
 }
