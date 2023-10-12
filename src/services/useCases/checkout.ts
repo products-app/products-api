@@ -5,8 +5,9 @@ export const checkoutPaymentIntent = async (order) => {
     amount: (order.total * 100).toFixed(0),
     currency: 'BRL',
     payment_method_types: ['card'],
+    metadata: {
+      order_id: order.id,
+    }
   });
-  console.log('checkout', paymentIntent, order)
-  
   return paymentIntent
 };
