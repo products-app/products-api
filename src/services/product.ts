@@ -3,8 +3,10 @@ import { Request, Response } from "express";
 import { findProductsRepo, getProductByID, createProduct, updateProduct } from '../repositories/products'
 
 const getProducts = async (req: Request, res: Response) => {
+  const searchValue = req.query.search ? req.query.search?.toString() : undefined
+
   try {
-    const products = await findProductsRepo();
+    const products = await findProductsRepo(searchValue);
 
     res.status(httpStatusCodes.OK);
     res.json(products);

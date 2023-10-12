@@ -1,6 +1,6 @@
 import prisma from "../db/prisma";
 
-const findProductsRepo = () => {
+const findProductsRepo = (search: string | undefined) => {
   return prisma.product.findMany({
     select: {
       id: true,
@@ -10,6 +10,11 @@ const findProductsRepo = () => {
       image: true,
       created_at: true,
       updated_at: true,
+    },
+    where: {
+      name: {
+        contains: search,
+      },
     },
   });
 }
