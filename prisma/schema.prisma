@@ -47,7 +47,8 @@ model Order {
   updated_at     DateTime        @updatedAt
   user           User            @relation(fields: [user_id], references: [id])
   user_id        Int
-  status         String          @default("active")
+  status         String          @default("pending_payment")
+  total          Float
   order_products OrderProducts[]
 
   @@index([user_id])
