@@ -1,12 +1,19 @@
 import httpStatusCodes from "http-status-codes";
 import { Request, Response } from "express";
-import { findProductsRepo, getProductByID, createProduct, updateProduct } from '../repositories/products'
+import {
+  findProducts,
+  getProductByID,
+  createProduct,
+  updateProduct,
+} from "../repositories/product";
 
 const getProducts = async (req: Request, res: Response) => {
-  const searchValue = req.query.search ? req.query.search?.toString() : undefined
+  const searchValue = req.query.search
+    ? req.query.search?.toString()
+    : undefined;
 
   try {
-    const products = await findProductsRepo(searchValue);
+    const products = await findProducts(searchValue);
 
     res.status(httpStatusCodes.OK);
     res.json(products);
@@ -18,11 +25,11 @@ const getProducts = async (req: Request, res: Response) => {
 
 const getProduct = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
-  
+
   if (!id) {
     res.status(httpStatusCodes.BAD_REQUEST);
     res.json({ error_msg: "id value is invalid" });
-    return
+    return;
   }
 
   try {
@@ -37,19 +44,10 @@ const getProduct = async (req: Request, res: Response) => {
 };
 
 const postProduct = async (req: Request, res: Response) => {
-  const product = req.body;
-
-  if (!product) {
-    res.status(httpStatusCodes.BAD_REQUEST);
-    res.json({ error_msg: "request body cannot be empty" });
-    return
-  }
-
   try {
-    await createProduct(product);
+    const created = await createProduct(req.body);
 
-    res.status(httpStatusCodes.CREATED);
-    res.json({});
+    res.status(httpStatusCodes.CREATED).json(created).send();
   } catch (e) {
     res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
     res.json({ error_msg: e });
@@ -58,19 +56,17 @@ const postProduct = async (req: Request, res: Response) => {
 
 const putProduct = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
-  
+
   if (!id) {
     res.status(httpStatusCodes.BAD_REQUEST);
     res.json({ error_msg: "id value is invalid" });
-    return
+    return;
   }
 
   try {
-    const product = req.body;
-    await updateProduct(id, product);
+    const updated = await updateProduct(id, req.body);
 
-    res.status(httpStatusCodes.OK);
-    res.json({});
+    res.status(httpStatusCodes.OK).json(updated).send();
   } catch (e) {
     res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
     res.json({ error_msg: e });
