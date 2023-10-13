@@ -50,12 +50,6 @@ const getUser = async (req: Request, res: Response) => {
 const postUser = async (req: Request, res: Response) => {
   const { email, name, username, password, phone } = req.body;
 
-  if (!email) {
-    res.status(httpStatusCodes.BAD_REQUEST);
-    res.json({ error_msg: "email cannot be empty" });
-    return;
-  }
-
   try {
     const userExists = await findUserByEmail(email);
     if (userExists) {
@@ -72,10 +66,9 @@ const postUser = async (req: Request, res: Response) => {
       phone,
     };
 
-    await createUser(newUser);
+    const created = await createUser(newUser);
 
-    res.status(httpStatusCodes.CREATED);
-    res.json({});
+    res.status(httpStatusCodes.CREATED).json(created).send();
   } catch (e) {
     res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
     res.json({ error_msg: e });
@@ -97,12 +90,12 @@ const putUser = async (req: Request, res: Response) => {
     const userToUpdate = {
       name,
       username,
+      password,
       phone,
     };
-    await updateUser(id, userToUpdate);
+    const updated = await updateUser(id, userToUpdate);
 
-    res.status(httpStatusCodes.OK);
-    res.json({});
+    res.status(httpStatusCodes.OK).json(updated).send();
   } catch (e) {
     res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
     res.json({ error_msg: e });
