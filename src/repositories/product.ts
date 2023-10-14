@@ -1,6 +1,7 @@
 import prisma from "../db/prisma";
+import { UpdateProductDto, CreateProductDto } from '../schemas/product'
 
-const findProductsRepo = (search: string | undefined) => {
+const findProducts = (search: string | undefined) => {
   return prisma.product.findMany({
     select: {
       id: true,
@@ -27,12 +28,11 @@ const getProductByID = (id: number) => {
   })
 }
 
-const createProduct = (product) => {
+const createProduct = (product: CreateProductDto) => {
   const defaultActiveStatus = true;
 
   return prisma.product.create({
     data: {
-      id: product.id,
       name: product.name,
       price: product.price,
       stock: product.stock,
@@ -42,7 +42,7 @@ const createProduct = (product) => {
   });
 }
 
-const updateProduct = (id: number, product) => {
+const updateProduct = (id: number, product: UpdateProductDto) => {
   return prisma.product.update({
     where: { id },
     data: {
@@ -56,7 +56,7 @@ const updateProduct = (id: number, product) => {
 }
 
 export {
-  findProductsRepo,
+  findProducts,
   getProductByID,
   createProduct,
   updateProduct,

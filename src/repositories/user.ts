@@ -1,4 +1,5 @@
 import prisma from "../db/prisma";
+import { CreateUserDto, UpdateUserDto } from '../schemas/user';
 
 const findUsers = () => {
   return prisma.user.findMany({
@@ -38,7 +39,6 @@ const findUserByID = (id: number) => {
       username: true,
       name: true,
       email: true,
-      password: true,
       phone: true,
       active: true,
       created_at: true,
@@ -47,9 +47,7 @@ const findUserByID = (id: number) => {
   })
 }
 
-const createUser = (user) => {
-  const defaultActiveStatus = true;
-
+const createUser = (user: CreateUserDto) => {
   return prisma.user.create({
     data: {
       name: user.name,
@@ -57,18 +55,36 @@ const createUser = (user) => {
       email: user.email,
       password: user.password,
       phone: user.phone,
-      active: defaultActiveStatus,    
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      phone: true,
+      active: true,
+      created_at: true,
+      updated_at: true,
     },
   });
 }
 
-const updateUser = (id: number, user) => {
+const updateUser = (id: number, user: UpdateUserDto) => {
   return prisma.user.update({
     where: { id },
     data: {
       name: user.name,
       username: user.username,
-      phone: user.phone,     
+      phone: user.phone,   
+      active: user.active,  
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      phone: true,
+      active: true,
+      created_at: true,
+      updated_at: true,
     },
   });
 }
