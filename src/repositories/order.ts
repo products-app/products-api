@@ -1,4 +1,5 @@
 import prisma from "../db/prisma";
+import { CreateOrderDto, UpdateOrderDto } from "../schemas/order";
 
 const findOrdersRepo = () => {
   return prisma.order.findMany({
@@ -10,9 +11,9 @@ const findOrdersRepo = () => {
       order_products: true,
       created_at: true,
       updated_at: true,
-    }
+    },
   });
-}
+};
 
 const getOrderByID = (id: number) => {
   return prisma.order.findUnique({
@@ -27,11 +28,11 @@ const getOrderByID = (id: number) => {
       order_products: true,
       created_at: true,
       updated_at: true,
-    }
-  })
-}
+    },
+  });
+};
 
-const createOrder = (order) => {
+const createOrder = (order: CreateOrderDto) => {
   const orderProducts = order.items.map((item) => ({
     product_id: item.product_id,
     price: item.price,
@@ -40,7 +41,6 @@ const createOrder = (order) => {
 
   return prisma.order.create({
     data: {
-      id: order.id,
       user_id: order.user_id,
       total: order.total,
       order_products: {
@@ -48,30 +48,17 @@ const createOrder = (order) => {
       },
     },
   });
-}
+};
 
-const updateOrder = (id: number, order) => {
-  let orderProducts;
-  if (order?.items) {
-    orderProducts = order.items.map((item) => ({
-      id: item.id || undefined,
-      product_id: item.productId || undefined,
-      price: item.price || undefined,
-      quantity: item.quantity || undefined,
-    }));
-  }
-
+const updateOrder = (id: number, order: UpdateOrderDto) => {
   return prisma.order.update({
     where: { id },
     data: {
       status: order.status || undefined,
       total: order.total || undefined,
-      order_products: {
-        update: orderProducts,
-      },    
     },
   });
-}
+};
 
 const findOrdersByUserID = (userId: number) => {
   return prisma.order.findMany({
@@ -82,14 +69,14 @@ const findOrdersByUserID = (userId: number) => {
       order_products: {
         include: {
           product: true,
-        }
+        },
       },
     },
     orderBy: {
-      id: 'desc',
+      id: "desc",
     },
   });
-}
+};
 
 export {
   findOrdersRepo,
@@ -98,4 +85,3 @@ export {
   updateOrder,
   findOrdersByUserID,
 };
-
