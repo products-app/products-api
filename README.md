@@ -88,7 +88,17 @@ cd products-api
 npm install
 ```
 
-### Running the app
+### Running the app with Docker (DEV environment)
+
+Install [Docker](https://docs.docker.com/get-docker/) in your environment, start the Docker and run this command:
+
+```
+npm run docker:dev
+```
+
+### Running the app (DEV environment)
+
+*(It needs run the mysqlserver in your environment)*
 
 Running this app is simple, just follow the commands below:
 
