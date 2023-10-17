@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+  mysql:
+    container_name: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=prompt
+    ports:
+      - "6603:3306"
+    volumes:
+      - "/root/docker/db/conf.d:/etc/mysql/conf.d:rw"
+    image: mysql
