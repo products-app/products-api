@@ -62,15 +62,10 @@ This is an example of how to list things you need to use the software and how to
 
 #### Enviroment Variables
 
-Change the `.env.sample` to `.env` and run the app.
+Change the `.env.sample` to `.env`.
 
-Note that you need to have mysql server running on your machine.
+Note that you need to have mysql server running on your machine or run the Docker.
 
-#### NPM
-
-```sh
-npm install npm@latest -g
-```
 
 ### Installation
 
@@ -88,20 +83,47 @@ cd products-api
 npm install
 ```
 
-### Running the app
+#### Running the app with Docker (DEV environment)
 
-Running this app is simple, just follow the commands below:
-
-Build the application:
+Install [Docker](https://docs.docker.com/get-docker/) in your environment, start the Docker and run these commands below:
 
 ```
-npm run build
+npm run docker:db
+```
+
+Iniciate the db (Prisma Migrations and Seed DB):
+```
+npm run start:db
 ```
 
 Run the application in the local environment:
-
 ```
 npm run dev
+```
+
+#### Running the app (DEV environment)
+
+*(It needs run the mysqlserver in your environment)*
+
+Running this app is simple, just follow the commands below:
+
+Install and start the [Mysql Server](https://formulae.brew.sh/formula/mysql) on your machine and configure database config in env file.
+
+Iniciate the db (Prisma Migrations and Seed DB):
+```
+npm run start:db
+```
+
+Run the application in the local environment:
+```
+npm run dev
+```
+
+#### Building the app
+
+Build the application:
+```
+npm run build
 ```
 
 ### Migrations with Prisma
