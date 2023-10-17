@@ -7,7 +7,7 @@ import config from './config';
 import routes from './routes';
 import webhooks from './routes/webhooks';
 
-const port = process.env.PORT || 3333;
+const port = config.api.port || 3333;
 const app = express();
 
 app.use(cors());
