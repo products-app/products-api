@@ -4,4 +4,5 @@ export default {
     baseURL: process.env.API_URL || '/api',
     baseURLWebhook: process.env.WEBHOOK_URL || '/webhooks',
   },
+  private_key: process.env.PRIVATE_KEY || null,
 }

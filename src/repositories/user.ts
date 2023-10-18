@@ -25,6 +25,7 @@ const findUserByEmail = (email: string) => {
       email: true,
       password: true,
       id: true,
+      is_admin: true,
     },
   })
 }

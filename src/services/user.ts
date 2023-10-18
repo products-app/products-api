@@ -7,7 +7,7 @@ import {
   createUser,
   updateUser,
 } from '@/repositories/user'
-import { hashPassword, checkPassword } from '@/helpers/tokens'
+import { hashPassword } from '@/helpers/tokens'
 
 const getUsers = async (req: Request, res: Response) => {
   try {
@@ -101,37 +101,9 @@ const putUser = async (req: Request, res: Response) => {
   }
 }
 
-const userLogin = async (req: Request, res: Response) => {
-  const { email, password } = req.body
-
-  try {
-    const userExists = await findUserByEmail(email)
-
-    if (!userExists) {
-      res.status(httpStatusCodes.NOT_FOUND)
-      res.json({ error_msg: 'user not exists' })
-      return
-    }
-
-    const isPasswordEqual = await checkPassword(password, userExists.password)
-    if (!isPasswordEqual) {
-      res.status(httpStatusCodes.UNAUTHORIZED)
-      res.json({ error_msg: 'invalid credentials' })
-      return
-    }
-
-    res.status(httpStatusCodes.OK)
-    res.json({ name: userExists.name, id: userExists.id, user_logged: true })
-  } catch (e) {
-    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR)
-    res.json({ user_logged: false, error_msg: e })
-  }
-}
-
 export default {
   getUsers,
   getUser,
   postUser,
   putUser,
-  userLogin,
 }
