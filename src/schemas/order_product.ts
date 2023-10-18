@@ -1,4 +1,4 @@
-import z from 'zod';
+import z from 'zod'
 
 const baseOrderProduct = z.object({
   id: z.number().optional(),
@@ -6,12 +6,12 @@ const baseOrderProduct = z.object({
   product_id: z.number(),
   price: z.number().optional(),
   quantity: z.number(),
-});
+})
 
-export const OrderProductSchema = baseOrderProduct;
+export const OrderProductSchema = baseOrderProduct
 
-export const PartialOrderProductSchema = OrderProductSchema.partial();
+export const PartialOrderProductSchema = OrderProductSchema.partial()
 
-export const OrderProductsSchema = z.array(PartialOrderProductSchema);
+export const OrderProductsSchema = z.array(PartialOrderProductSchema)
 
-export type OrderProductsDto = z.infer<typeof OrderProductsSchema>;
+export type OrderProductsDto = z.infer<typeof OrderProductsSchema>

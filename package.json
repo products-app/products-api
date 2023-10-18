@@ -10,12 +10,14 @@
     "docker:db": "docker-compose -f docker-compose.db.yml up -d --remove-orphans",
     "migrate:dev": "prisma migrate dev --preview-feature",
     "seed": "prisma db seed",
-    "start:db": "npm run migrate:dev && npm run seed"
+    "start:db": "npm run migrate:dev && npm run seed",
+    "lint:fix": "eslint src/**/* --ext .js,.ts,.tsx --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "5.0.1",
     "@types/cors": "2.8.14",
     "@types/express": "4.17.18",
     "@types/node": "20.8.3",
