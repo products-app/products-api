@@ -44,3 +44,16 @@ export const UserLoginSchema = z.object({
 })
 
 export type UserLoginDto = z.infer<typeof UserLoginSchema>
+
+export const UserAuthSchema = z.object({
+  id: z.number(),
+  email: z
+    .string({
+      required_error: 'email is required',
+      invalid_type_error: 'email must be a string',
+    })
+    .email(),
+  isAdmin: z.boolean().optional(),
+})
+
+export type UserAuthDto = z.infer<typeof UserAuthSchema>
