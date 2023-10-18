@@ -38,6 +38,7 @@ model User {
   active       Boolean       @default(true)
   order        Order[]
   order_events OrderEvents[]
+  is_admin     Boolean?      @default(false)
 
   @@map("user")
 }
