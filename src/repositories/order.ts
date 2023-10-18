@@ -1,5 +1,5 @@
-import prisma from "../db/prisma";
-import { CreateOrderDto, UpdateOrderDto } from "../schemas/order";
+import prisma from '@/db/prisma'
+import { CreateOrderDto, UpdateOrderDto } from '@/schemas/order'
 
 const findOrdersRepo = () => {
   return prisma.order.findMany({
@@ -12,8 +12,8 @@ const findOrdersRepo = () => {
       created_at: true,
       updated_at: true,
     },
-  });
-};
+  })
+}
 
 const getOrderByID = (id: number) => {
   return prisma.order.findUnique({
@@ -29,15 +29,15 @@ const getOrderByID = (id: number) => {
       created_at: true,
       updated_at: true,
     },
-  });
-};
+  })
+}
 
 const createOrder = (order: CreateOrderDto) => {
   const orderProducts = order.items.map((item) => ({
     product_id: item.product_id,
     price: item.price,
     quantity: item.quantity,
-  }));
+  }))
 
   return prisma.order.create({
     data: {
@@ -47,8 +47,8 @@ const createOrder = (order: CreateOrderDto) => {
         create: orderProducts,
       },
     },
-  });
-};
+  })
+}
 
 const updateOrder = (id: number, order: UpdateOrderDto) => {
   return prisma.order.update({
@@ -57,8 +57,8 @@ const updateOrder = (id: number, order: UpdateOrderDto) => {
       status: order.status || undefined,
       total: order.total || undefined,
     },
-  });
-};
+  })
+}
 
 const findOrdersByUserID = (userId: number) => {
   return prisma.order.findMany({
@@ -73,10 +73,10 @@ const findOrdersByUserID = (userId: number) => {
       },
     },
     orderBy: {
-      id: "desc",
+      id: 'desc',
     },
-  });
-};
+  })
+}
 
 export {
   findOrdersRepo,
@@ -84,4 +84,4 @@ export {
   createOrder,
   updateOrder,
   findOrdersByUserID,
-};
+}

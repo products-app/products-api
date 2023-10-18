@@ -1,22 +1,22 @@
-import z from "zod";
-import { OrderProductsSchema } from "./order_product";
+import z from 'zod'
+import { OrderProductsSchema } from './order_product'
 
 const baseOrder = {
-  id: z.string().optional(),
+  id: z.number().optional(),
   user_id: z.number(),
   status: z.string().optional(),
   total: z.number(),
-};
+}
 
 const createOrderSchema = {
   ...baseOrder,
-  items: OrderProductsSchema,
-};
+  items: OrderProductsSchema.optional(),
+}
 
-export const OrderSchema = z.object(createOrderSchema);
+export const OrderSchema = z.object(createOrderSchema)
 
-export type CreateOrderDto = z.infer<typeof OrderSchema>;
+export type CreateOrderDto = z.infer<typeof OrderSchema>
 
-export const PartialOrderSchema = OrderSchema.partial();
+export const PartialOrderSchema = OrderSchema.partial()
 
-export type UpdateOrderDto = z.infer<typeof PartialOrderSchema>;
+export type UpdateOrderDto = z.infer<typeof PartialOrderSchema>

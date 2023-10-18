@@ -1,89 +1,88 @@
-import httpStatusCodes from "http-status-codes";
-import { Request, Response } from "express";
+import httpStatusCodes from 'http-status-codes'
+import { Request, Response } from 'express'
 import {
   findUsers,
   findUserByEmail,
   findUserByID,
   createUser,
   updateUser,
-} from "../repositories/user";
-import { hashPassword, checkPassword } from "../helpers/tokens";
+} from '@/repositories/user'
+import { hashPassword, checkPassword } from '@/helpers/tokens'
 
 const getUsers = async (req: Request, res: Response) => {
   try {
-    const users = await findUsers();
+    const users = await findUsers()
 
-    res.status(httpStatusCodes.OK);
-    res.json(users);
+    res.status(httpStatusCodes.OK)
+    res.json(users)
   } catch (e) {
-    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
-    res.json({ error_msg: e });
+    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR)
+    res.json({ error_msg: e })
   }
-};
+}
 
 const getUser = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
+  const id = parseInt(req.params.id, 10)
 
   if (!id) {
-    res.status(httpStatusCodes.BAD_REQUEST);
-    res.json({ error_msg: "id value is invalid" });
-    return;
+    res.status(httpStatusCodes.BAD_REQUEST)
+    res.json({ error_msg: 'id value is invalid' })
+    return
   }
 
   try {
-    const user = await findUserByID(id);
+    const user = await findUserByID(id)
     if (!user) {
-      res.status(httpStatusCodes.NOT_FOUND);
-      res.json({ error_msg: "user not found" });
+      res.status(httpStatusCodes.NOT_FOUND)
+      res.json({ error_msg: 'user not found' })
       return
     }
 
-    const { password, ...filteredUser } = Object.assign({}, user);
-    res.status(httpStatusCodes.OK);
-    res.json(filteredUser || {});
+    res.status(httpStatusCodes.OK)
+    res.json(user || {})
   } catch (e) {
-    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
-    res.json({ error_msg: e });
+    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR)
+    res.json({ error_msg: e })
   }
-};
+}
 
 const postUser = async (req: Request, res: Response) => {
-  const { email, name, username, password, phone } = req.body;
+  const { email, name, username, password, phone } = req.body
 
   try {
-    const userExists = await findUserByEmail(email);
+    const userExists = await findUserByEmail(email)
     if (userExists) {
-      res.status(httpStatusCodes.CONFLICT);
-      res.json({ error_msg: "user already exists" });
-      return;
+      res.status(httpStatusCodes.CONFLICT)
+      res.json({ error_msg: 'user already exists' })
+      return
     }
-    const newPass = await hashPassword(password);
+    const newPass = await hashPassword(password)
     const newUser = {
       email,
       name,
       username,
       password: newPass,
       phone,
-    };
+    }
 
-    const created = await createUser(newUser);
+    const created = await createUser(newUser)
 
-    res.status(httpStatusCodes.CREATED).json(created).send();
+    res.status(httpStatusCodes.CREATED).json(created).send()
   } catch (e) {
-    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
-    res.json({ error_msg: e });
+    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR)
+    res.json({ error_msg: e })
   }
-};
+}
 
 const putUser = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
-  const { email, name, username, password, phone } = req.body;
+  const id = parseInt(req.params.id, 10)
+  const { email, name, username, password, phone } = req.body
 
-  const userExists = await findUserByEmail(email);
+  const userExists = await findUserByEmail(email)
   if (!userExists) {
-    res.status(httpStatusCodes.NOT_FOUND);
-    res.json({ error_msg: "user not exists" });
-    return;
+    res.status(httpStatusCodes.NOT_FOUND)
+    res.json({ error_msg: 'user not exists' })
+    return
   }
 
   try {
@@ -92,42 +91,42 @@ const putUser = async (req: Request, res: Response) => {
       username,
       password,
       phone,
-    };
-    const updated = await updateUser(id, userToUpdate);
+    }
+    const updated = await updateUser(id, userToUpdate)
 
-    res.status(httpStatusCodes.OK).json(updated).send();
+    res.status(httpStatusCodes.OK).json(updated).send()
   } catch (e) {
-    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
-    res.json({ error_msg: e });
+    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR)
+    res.json({ error_msg: e })
   }
-};
+}
 
 const userLogin = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body
 
   try {
-    const userExists = await findUserByEmail(email);
+    const userExists = await findUserByEmail(email)
 
     if (!userExists) {
-      res.status(httpStatusCodes.NOT_FOUND);
-      res.json({ error_msg: "user not exists" });
-      return;
+      res.status(httpStatusCodes.NOT_FOUND)
+      res.json({ error_msg: 'user not exists' })
+      return
     }
 
-    const isPasswordEqual = await checkPassword(password, userExists.password);
+    const isPasswordEqual = await checkPassword(password, userExists.password)
     if (!isPasswordEqual) {
-      res.status(httpStatusCodes.UNAUTHORIZED);
-      res.json({ error_msg: "invalid credentials" });
-      return;
+      res.status(httpStatusCodes.UNAUTHORIZED)
+      res.json({ error_msg: 'invalid credentials' })
+      return
     }
 
-    res.status(httpStatusCodes.OK);
-    res.json({ name: userExists.name, id: userExists.id, user_logged: true });
+    res.status(httpStatusCodes.OK)
+    res.json({ name: userExists.name, id: userExists.id, user_logged: true })
   } catch (e) {
-    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
-    res.json({ user_logged: false, error_msg: e });
+    res.status(httpStatusCodes.INTERNAL_SERVER_ERROR)
+    res.json({ user_logged: false, error_msg: e })
   }
-};
+}
 
 export default {
   getUsers,
@@ -135,4 +134,4 @@ export default {
   postUser,
   putUser,
   userLogin,
-};
+}

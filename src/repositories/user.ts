@@ -1,5 +1,5 @@
-import prisma from "../db/prisma";
-import { CreateUserDto, UpdateUserDto } from '../schemas/user';
+import prisma from '@/db/prisma'
+import { CreateUserDto, UpdateUserDto } from '@/schemas/user'
 
 const findUsers = () => {
   return prisma.user.findMany({
@@ -12,7 +12,7 @@ const findUsers = () => {
       created_at: true,
       updated_at: true,
     },
-  });
+  })
 }
 
 const findUserByEmail = (email: string) => {
@@ -65,7 +65,7 @@ const createUser = (user: CreateUserDto) => {
       created_at: true,
       updated_at: true,
     },
-  });
+  })
 }
 
 const updateUser = (id: number, user: UpdateUserDto) => {
@@ -74,8 +74,8 @@ const updateUser = (id: number, user: UpdateUserDto) => {
     data: {
       name: user.name,
       username: user.username,
-      phone: user.phone,   
-      active: user.active,  
+      phone: user.phone,
+      active: user.active,
     },
     select: {
       id: true,
@@ -86,14 +86,7 @@ const updateUser = (id: number, user: UpdateUserDto) => {
       created_at: true,
       updated_at: true,
     },
-  });
+  })
 }
 
-export {
-  findUsers,
-  findUserByEmail,
-  findUserByID,
-  createUser,
-  updateUser,
-};
-
+export { findUsers, findUserByEmail, findUserByID, createUser, updateUser }
