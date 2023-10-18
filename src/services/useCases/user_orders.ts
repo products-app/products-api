@@ -1,7 +1,7 @@
 import httpStatusCodes from 'http-status-codes'
 import { Request, Response } from 'express'
-import { findUserByID } from '../../repositories/user'
-import { findOrdersByUserID } from '../../repositories/order'
+import { findUserByID } from '@/repositories/user'
+import { findOrdersByUserID } from '@/repositories/order'
 
 const getUserOrders = async (req: Request, res: Response) => {
   const userID = parseInt(req.params.id, 10)

@@ -5,7 +5,7 @@ import {
   getProductByID,
   createProduct,
   updateProduct,
-} from '../repositories/product'
+} from '@/repositories/product'
 
 const getProducts = async (req: Request, res: Response) => {
   const searchValue = req.query.search

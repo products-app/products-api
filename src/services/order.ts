@@ -5,7 +5,7 @@ import {
   getOrderByID,
   createOrder,
   updateOrder,
-} from '../repositories/order'
+} from '@/repositories/order'
 import { checkoutPaymentIntent } from './useCases/checkout'
 
 const getOrders = async (req: Request, res: Response) => {

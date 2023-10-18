@@ -1,8 +1,8 @@
 import express from 'express'
-import userService from '../services/user'
-import userUseCases from '../services/useCases/user_orders'
+import userService from '@/services/user'
+import userUseCases from '@/services/useCases/user_orders'
+import { UserSchema, PartialUserSchema, UserLoginSchema } from '@/schemas/user'
 import { validate } from './middlewares/validate'
-import { UserSchema, PartialUserSchema, UserLoginSchema } from '../schemas/user'
 
 const router = express.Router()
 

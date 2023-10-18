@@ -1,5 +1,5 @@
 import express from 'express'
-import checkoutService from '../services/useCases/checkout'
+import checkoutService from '@/services/useCases/checkout'
 
 const router = express.Router()
 

@@ -1,5 +1,5 @@
-import prisma from '../db/prisma'
-import { CreateOrderDto, UpdateOrderDto } from '../schemas/order'
+import prisma from '@/db/prisma'
+import { CreateOrderDto, UpdateOrderDto } from '@/schemas/order'
 
 const findOrdersRepo = () => {
   return prisma.order.findMany({

@@ -1,7 +1,7 @@
 import express from 'express'
-import productService from '../services/product'
+import productService from '@/services/product'
+import { ProductSchema, PartialProductSchema } from '@/schemas/product'
 import { validate } from './middlewares/validate'
-import { ProductSchema, PartialProductSchema } from '../schemas/product'
 
 const router = express.Router()
 

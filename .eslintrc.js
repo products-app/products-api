@@ -27,8 +27,17 @@ module.exports = {
     'import/prefer-default-export': 'off',
   },
   settings: {
+    'import/extensions': ['.js', '.ts'],
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts'],
+    },
     'import/resolver': {
-      typescript: {},
+      node: {
+        extensions: ['.js', '.ts'],
+      },
+      typescript: {
+        extensions: ['.js', '.ts'],
+      },
     },
   },
 }

@@ -1,5 +1,5 @@
-import prisma from '../db/prisma'
-import { CreateUserDto, UpdateUserDto } from '../schemas/user'
+import prisma from '@/db/prisma'
+import { CreateUserDto, UpdateUserDto } from '@/schemas/user'
 
 const findUsers = () => {
   return prisma.user.findMany({

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import httpStatusCodes from 'http-status-codes'
 import { NextFunction, Request, Response } from 'express'
-import { createOrderEvent } from '../../repositories/order_event'
-import { updateOrder } from '../../repositories/order'
-import { CreateOrderDto } from '../../schemas/order'
+import { createOrderEvent } from '@/repositories/order_event'
+import { updateOrder } from '@/repositories/order'
+import { CreateOrderDto } from '@/schemas/order'
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 

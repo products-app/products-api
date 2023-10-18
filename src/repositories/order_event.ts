@@ -1,5 +1,5 @@
-import prisma from '../db/prisma'
-import { OrderEventDto } from '../schemas/order_event'
+import prisma from '@/db/prisma'
+import { OrderEventDto } from '@/schemas/order_event'
 
 export const createOrderEvent = (event: OrderEventDto) => {
   return prisma.orderEvents.create({

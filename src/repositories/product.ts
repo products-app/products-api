@@ -1,5 +1,5 @@
-import prisma from '../db/prisma'
-import { UpdateProductDto, CreateProductDto } from '../schemas/product'
+import prisma from '@/db/prisma'
+import { UpdateProductDto, CreateProductDto } from '@/schemas/product'
 
 const findProducts = (search: string | undefined) => {
   return prisma.product.findMany({

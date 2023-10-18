@@ -6,8 +6,8 @@ import {
   findUserByID,
   createUser,
   updateUser,
-} from '../repositories/user'
-import { hashPassword, checkPassword } from '../helpers/tokens'
+} from '@/repositories/user'
+import { hashPassword, checkPassword } from '@/helpers/tokens'
 
 const getUsers = async (req: Request, res: Response) => {
   try {
