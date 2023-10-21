@@ -10,6 +10,12 @@ import {
 import { hashPassword } from '@/helpers/tokens'
 
 const getUsers = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Users']
+    #swagger.security = [{
+      "authorization": []
+    }] 
+  */
   try {
     const users = await findUsers()
 
@@ -22,6 +28,12 @@ const getUsers = async (req: Request, res: Response) => {
 }
 
 const getUser = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Users']
+    #swagger.security = [{
+      "authorization": []
+    }]
+  */
   const id = parseInt(req.params.id, 10)
 
   if (!id) {
@@ -47,6 +59,13 @@ const getUser = async (req: Request, res: Response) => {
 }
 
 const postUser = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Users']
+    #swagger.parameters['obj'] = {
+      in: 'body',
+      schema: { $ref: '#/components/schemas/user' }
+    }
+  */
   const { email, name, username, password, phone } = req.body
 
   try {
@@ -75,6 +94,16 @@ const postUser = async (req: Request, res: Response) => {
 }
 
 const putUser = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Users']
+    #swagger.security = [{
+      "authorization": []
+    }]
+    #swagger.parameters['obj'] = {
+      in: 'body',
+      schema: { $ref: '#/components/schemas/user' }
+    }
+  */
   const id = parseInt(req.params.id, 10)
   const { email, name, username, password, phone } = req.body
 
