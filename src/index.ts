@@ -6,14 +6,11 @@ import cors from 'cors'
 import config from './config'
 import routes from './routes'
 import webhooks from './routes/webhooks'
-import swagger from './swagger'
 
 const port = config.api.port || 3333
 const app = express()
 
 app.use(cors())
-
-app.use(swagger)
 
 app.use(
   config.api.baseURLWebhook,
