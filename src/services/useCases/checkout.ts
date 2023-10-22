@@ -24,6 +24,7 @@ const checkoutStripeEvents = async (
   res: Response,
   next: NextFunction,
 ) => {
+  // #swagger.ignore = true
   let event = req.body
 
   try {

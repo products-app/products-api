@@ -119,7 +119,7 @@ Run the application in the local environment:
 npm run dev
 ```
 
-#### Building the app
+### Building the app
 
 Build the application:
 ```
@@ -144,11 +144,17 @@ To reset your database and apply all migrations (all data will be lost)
 prisma migrate reset
 ```
 
+### Run the api docs
+
+Run the Swagger API Docs with command:
+```
+make run-api-docs
+```
+
 <!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
 
 <!-- CONTACT -->
 ## Contact

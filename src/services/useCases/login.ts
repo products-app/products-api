@@ -4,6 +4,14 @@ import { findUserByEmail } from '@/repositories/user'
 import { checkPassword, generateToken } from '@/helpers/tokens'
 
 const userLogin = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['User Login']
+    #swagger.parameters['obj'] = {
+      in: 'body',
+      description: 'User Auth',
+      schema: { $ref: '#/components/schemas/userlogin' }
+    } 
+  */
   const { email, password } = req.body
 
   try {

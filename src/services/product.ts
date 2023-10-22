@@ -8,6 +8,9 @@ import {
 } from '@/repositories/product'
 
 const getProducts = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Products']
+  */
   const searchValue = req.query.search
     ? req.query.search?.toString()
     : undefined
@@ -24,6 +27,7 @@ const getProducts = async (req: Request, res: Response) => {
 }
 
 const getProduct = async (req: Request, res: Response) => {
+  // #swagger.tags = ['Products']
   const id = parseInt(req.params.id, 10)
 
   if (!id) {
@@ -44,6 +48,16 @@ const getProduct = async (req: Request, res: Response) => {
 }
 
 const postProduct = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Products']
+    #swagger.security = [{
+      "authorization": []
+    }]
+    #swagger.parameters['obj'] = {
+      in: 'body',
+      schema: { $ref: '#/components/schemas/product' }
+    }
+  */
   try {
     const created = await createProduct(req.body)
 
@@ -55,6 +69,16 @@ const postProduct = async (req: Request, res: Response) => {
 }
 
 const putProduct = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Products']
+    #swagger.security = [{
+      "authorization": []
+    }]
+    #swagger.parameters['obj'] = {
+      in: 'body',
+      schema: { $ref: '#/components/schemas/product' }
+    }
+  */
   const id = parseInt(req.params.id, 10)
 
   if (!id) {

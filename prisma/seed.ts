@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { hashPassword } from '../src/helpers/tokens'
 
 const prisma = new PrismaClient()
 
@@ -70,11 +71,13 @@ async function main() {
     ],
   })
 
+  const newPass = await hashPassword('12345')
+
   const user = await prisma.user.create({
     data: {
       name: 'Admin',
       email: 'admin@prompt.com.br',
-      password: '12345',
+      password: newPass,
       is_admin: true,
     },
   })

@@ -4,6 +4,12 @@ import { findUserByID } from '@/repositories/user'
 import { findOrdersByUserID } from '@/repositories/order'
 
 const getUserOrders = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Users']
+    #swagger.security = [{
+      "authorization": []
+    }]
+  */
   const userID = parseInt(req.params.id, 10)
 
   if (!userID) {

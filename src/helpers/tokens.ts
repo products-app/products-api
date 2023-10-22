@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import config from '@/config'
-import { UserAuthDto } from '@/schemas/user'
+import config from '../config'
+import { UserAuthDto } from '../schemas/user'
 
 const hashPassword = async (password: string) => {
   const salt = await bcrypt.genSalt()

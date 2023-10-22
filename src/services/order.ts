@@ -9,6 +9,12 @@ import {
 import { checkoutPaymentIntent } from './useCases/checkout'
 
 const getOrders = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Orders']
+    #swagger.security = [{
+      "authorization": []
+    }]
+  */
   try {
     const orders = await findOrdersRepo()
 
@@ -21,6 +27,12 @@ const getOrders = async (req: Request, res: Response) => {
 }
 
 const getOrder = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Orders']
+    #swagger.security = [{
+      "authorization": []
+    }]
+  */
   const id = parseInt(req.params.id, 10)
 
   if (!id) {
@@ -47,6 +59,16 @@ const getOrder = async (req: Request, res: Response) => {
 }
 
 const postOrder = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Orders']
+    #swagger.security = [{
+      "authorization": []
+    }]
+    #swagger.parameters['obj'] = {
+      in: 'body',
+      schema: { $ref: '#/components/schemas/order' }
+    }
+  */
   const order = req.body
 
   if (!order) {
@@ -78,6 +100,16 @@ const postOrder = async (req: Request, res: Response) => {
 }
 
 const putOrder = async (req: Request, res: Response) => {
+  /* 
+    #swagger.tags = ['Orders']
+    #swagger.security = [{
+      "authorization": []
+    }]
+    #swagger.parameters['obj'] = {
+      in: 'body',
+      schema: { $ref: '#/components/schemas/order' }
+    }
+  */
   const id = parseInt(req.params.id, 10)
 
   if (!id) {
