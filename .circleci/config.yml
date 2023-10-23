@@ -1,0 +1,62 @@
+version: 2.1
+setup: true
+orbs:
+  node: circleci/node@5.0.2
+  codecov: codecov/codecov@3.3.0
+jobs:
+  auto-create-config:
+    docker:
+      - image: circleci/circleci-inferconfig:latest
+    steps:
+      - checkout
+      - run: circleci-inferconfig > generated_config.yml
+      - continuation/continue:
+          configuration_path: generated_config.yml
+  test-node:
+    executor: node/default
+    environment:
+      JEST_JUNIT_OUTPUT_DIR: ./test-results/
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Run tests
+          command: npm run test:ci
+      - store_test_results:
+          path: ./test-results/
+      - store-coverage-data
+      - upload-coverage
+  build-node:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          command: npm run build
+      - run:
+          name: Create the ~/artifacts directory if it doesn't exist
+          command: mkdir -p ~/artifacts
+      - run:
+          name: Copy artifacts
+          command: cp -R build dist public .output .next .docusaurus ~/artifacts 2>/dev/null || true
+      - store_artifacts:
+          path: ~/artifacts
+          destination: node-build
+commands:
+  store-coverage-data:
+    steps:
+      - store_artifacts:
+          path: coverage
+  upload-coverage:
+    steps:
+      - codecov/upload:
+          file: coverage/coverage-final.json
+workflows:
+  build-and-test:
+    jobs:
+      - test-node
+      - build-node:
+          requires:
+            - test-node

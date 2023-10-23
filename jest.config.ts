@@ -3,10 +3,10 @@ import type { Config } from 'jest'
 const config: Config = {
   clearMocks: true,
   collectCoverage: true,
-  coverageDirectory: 'coverage',
+  coverageDirectory: './coverage/',
   coverageProvider: 'v8',
   preset: 'ts-jest',
-  setupFiles: ['dotenv/config'],
+  setupFiles: ['dotenv/config', '<rootDir>/tests/setEnvVars.ts'],
   setupFilesAfterEnv: [
     '<rootDir>/tests/__mocks__/prisma.ts',
     '<rootDir>/tests/__mocks__/stripe.ts',
