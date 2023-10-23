@@ -51,7 +51,7 @@ const getUser = async (req: Request, res: Response) => {
     }
 
     res.status(httpStatusCodes.OK)
-    res.json(user || {})
+    res.json(user)
   } catch (e) {
     res.status(httpStatusCodes.INTERNAL_SERVER_ERROR)
     res.json({ error_msg: e })
