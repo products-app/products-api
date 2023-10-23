@@ -29,7 +29,7 @@ const getUserOrders = async (req: Request, res: Response) => {
     const orders = await findOrdersByUserID(userID)
 
     res.status(httpStatusCodes.OK)
-    res.json(orders || [])
+    res.json(orders)
   } catch (e) {
     res.status(httpStatusCodes.INTERNAL_SERVER_ERROR)
     res.json({ error_msg: e })

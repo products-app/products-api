@@ -80,7 +80,6 @@ const postOrder = async (req: Request, res: Response) => {
   try {
     // TO DO: VALIDATE TOTAL AND PRODUCTS
     const orderCreated = await createOrder(order)
-    // const paymentIntent = await checkoutPaymentIntent(orderCreated)
     const paymentIntent = await checkoutPaymentIntent({
       id: orderCreated.id,
       user_id: orderCreated.user_id,

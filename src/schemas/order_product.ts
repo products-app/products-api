@@ -12,6 +12,6 @@ export const OrderProductSchema = baseOrderProduct
 
 export const PartialOrderProductSchema = OrderProductSchema.partial()
 
-export const OrderProductsSchema = z.array(PartialOrderProductSchema)
+export const OrderProductsSchema = z.array(OrderProductSchema)
 
 export type OrderProductsDto = z.infer<typeof OrderProductsSchema>

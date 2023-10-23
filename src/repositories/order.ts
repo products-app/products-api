@@ -1,5 +1,6 @@
 import prisma from '@/db/prisma'
 import { CreateOrderDto, UpdateOrderDto } from '@/schemas/order'
+import { OrderProductsDto } from '@/schemas/order_product'
 
 const findOrdersRepo = () => {
   return prisma.order.findMany({
@@ -33,18 +34,23 @@ const getOrderByID = (id: number) => {
 }
 
 const createOrder = (order: CreateOrderDto) => {
-  const orderProducts = order.items.map((item) => ({
-    product_id: item.product_id,
-    price: item.price,
-    quantity: item.quantity,
-  }))
+  let orderProducts: OrderProductsDto = []
+  if (order.items) {
+    orderProducts = order.items.map((item) => ({
+      product_id: item.product_id,
+      price: item.price,
+      quantity: item.quantity,
+    }))
+  }
 
   return prisma.order.create({
     data: {
       user_id: order.user_id,
       total: order.total,
       order_products: {
-        create: orderProducts,
+        createMany: {
+          data: orderProducts,
+        },
       },
     },
   })

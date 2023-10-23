@@ -12,11 +12,7 @@ const app = express()
 
 app.use(cors())
 
-app.use(
-  config.api.baseURLWebhook,
-  express.raw({ type: 'application/json' }),
-  webhooks,
-)
+app.use(config.api.baseURLWebhook, webhooks)
 
 app.use(bodyParser.json())
 app.use(
@@ -28,6 +24,8 @@ app.use(
 
 app.use(config.api.baseURL, routes)
 
-app.listen(port, () => console.log(`SERVER NOW RUNNING ON PORT ${port}...`))
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => console.log(`SERVER NOW RUNNING ON PORT ${port}...`))
+}
 
 export default app
