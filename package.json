@@ -14,7 +14,8 @@
     "lint:fix": "eslint src/**/* --ext .js,.ts,.tsx --fix",
     "swagger-autogen": "tsx ./docs/swagger/index.ts",
     "test": "NODE_ENV=test jest --coverage",
-    "test:ci": "NODE_ENV=test jest --ci --runInBand --reporters=default --coverage --coverageDirectory=coverage"
+    "test:ci": "NODE_ENV=test jest --ci --runInBand --reporters=default --coverage --coverageDirectory=coverage",
+    "debug": "tsx --nolazy src/index.ts"
   },
   "keywords": [],
   "author": "",
