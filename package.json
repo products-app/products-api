@@ -57,7 +57,7 @@
     "http-status-codes": "2.3.0",
     "jsonwebtoken": "9.0.2",
     "mysql2": "3.6.2",
-    "stripe": "14.1.0",
+    "stripe": "14.7.0",
     "swagger-autogen": "2.23.6",
     "zod": "3.22.4"
   },
